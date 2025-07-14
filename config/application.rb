@@ -51,5 +51,9 @@ module Kart
     # Autoload services path
     config.autoload_paths << Rails.root.join("app/services/**")
     config.eager_load_paths << Rails.root.join("app/services/**")
+
+    # Autoload lib path
+    config.autoload_paths << Rails.root.join("app/lib/**")
+    config.eager_load_paths << Rails.root.join("app/lib/**")
   end
 end
