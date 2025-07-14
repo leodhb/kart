@@ -26,12 +26,12 @@ RSpec.describe "Api::V1::Carts", type: :request do
         expect(json_response['totalPrice']).to be_present
       end
     end
-    
+
     context "with invalid parameters" do
       let(:params) do
         {
           cart: {
-            reference: nil,
+            reference: nil
           }
         }
       end
@@ -40,8 +40,8 @@ RSpec.describe "Api::V1::Carts", type: :request do
         request
         expect(response).to have_http_status(:unprocessable_entity)
         expect(json_response['errors']).to include(
-          'reference' => ['must be filled'],
-          'line_items' => ['is missing']
+          'reference' => [ 'must be filled' ],
+          'line_items' => [ 'is missing' ]
         )
       end
     end

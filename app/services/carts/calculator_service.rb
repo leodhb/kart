@@ -33,7 +33,7 @@ module Carts
       items = cart_items.map do |item|
         build_item(item)
       end
-  
+
       {
         reference: cart_reference,
         items: items,
