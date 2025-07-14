@@ -21,8 +21,8 @@ module Carts
       discount_rate = discount_rule.discount_value / 100
       final_price = original_price - (original_price * discount_rate)
 
-      item[:discount_amount] = (original_price - final_price).to_i
-      item[:final_price] = final_price.to_i
+      item[:discount_amount] = (original_price - final_price)
+      item[:final_price] = final_price
     end
 
     def discount_applicable?
