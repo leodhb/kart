@@ -59,5 +59,9 @@ module Kart
     # Autoload schemas path
     config.autoload_paths << Rails.root.join("app/schemas/**")
     config.eager_load_paths << Rails.root.join("app/schemas/**")
+
+    # Autoload blueprints path
+    config.autoload_paths << Rails.root.join("app/blueprints/**")
+    config.eager_load_paths << Rails.root.join("app/blueprints/**")
   end
 end
