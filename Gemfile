@@ -48,3 +48,5 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
 end
+
+gem "dry-schema", "~> 1.14"
