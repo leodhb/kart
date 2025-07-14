@@ -47,5 +47,9 @@ module Kart
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
+
+    # Autoload services path
+    config.autoload_paths << Rails.root.join("app/services/**")
+    config.eager_load_paths << Rails.root.join("app/services/**")
   end
 end
