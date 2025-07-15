@@ -1,16 +1,12 @@
 class Api::V1::CartsController < ApplicationController
   def calculate
-    schema = CartSchema.call(cart_params.to_h)
+    result = Carts::CalculatorService.new(cart_params:).call
 
-    if schema.success?
-      result = Carts::CalculatorService.new(cart: schema.to_h).call
-
-      render json: CartSummaryBlueprint.render(result), status: :ok
+    if result[:success]
+      render json: CartSummaryBlueprint.render(result[:data]), status: :ok
     else
-      render json: { errors: schema.errors.to_h }, status: :unprocessable_entity
+      render json: { errors: result[:errors] }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { error: "Internal server error" }, status: :internal_server_error
   end
 
   private

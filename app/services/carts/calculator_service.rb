@@ -1,17 +1,28 @@
 module Carts
-  class CalculatorService
-    attr_reader :cart_reference, :cart_items, :discount_rule
+  class CalculatorService < ApplicationService
+    attr_reader :cart_params, :cart_reference, :cart_items, :discount_rule
 
-    def initialize(cart:, discount_rule: DiscountRule.current)
-      @cart_reference = cart[:reference]
-      @cart_items = cart[:line_items]
+    def initialize(cart_params:, discount_rule: DiscountRule.current)
+      @cart_params = cart_params
       @discount_rule = discount_rule
     end
 
     def call
-      apply_discount_to(cheapest_eligible_item) if discount_applicable?
+      validation_result = validate_with_schema(CartSchema, cart_params)
+      return validation_result unless validation_result[:success]
 
-      build_summary
+      validated_cart = validation_result[:data]
+      @cart_reference = validated_cart[:reference]
+      @cart_items = validated_cart[:line_items]
+
+      begin
+        apply_discount_to(cheapest_eligible_item) if discount_applicable?
+        result = build_summary
+
+        success_result(result)
+      rescue StandardError => e
+        failure_result({ error: e.message })
+      end
     end
 
     private
