@@ -26,8 +26,11 @@ module Carts
     end
 
     def discount_applicable?
-      prerequisite_items.any? && eligible_items.any?
+      return false unless discount_rule
+
+      prerequisite_items.any? && eligible_items.any? && discount_applicable_items.size >= 2
     end
+
 
     def build_summary
       items = cart_items.map do |item|
@@ -69,6 +72,15 @@ module Carts
 
     def cheapest_eligible_item
       eligible_items.min_by { |item| item[:price] }
+    end
+
+    def discount_applicable_items
+      return [] unless discount_rule
+
+      cart_items.select do |item|
+        discount_rule.prerequisite_skus.include?(item[:sku]) ||
+        discount_rule.eligible_skus.include?(item[:sku])
+      end
     end
   end
 end
