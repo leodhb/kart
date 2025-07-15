@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+DiscountRule.find_or_create_by!(
+  prerequisite_skus: [ "PEANUT-BUTTER", "COCOA", "FRUITY" ],
+  eligible_skus: [ "BANANA-CAKE", "COCOA", "CHOCOLATE" ],
+  discount_unit: "percentage",
+  discount_value: 50
+)
